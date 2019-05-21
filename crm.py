@@ -50,8 +50,13 @@ class CRM:
     print('Enter a Note: ')
     note = input()
 
-    Contact.create(first_name, last_name, email, note)
-  
+    contact = Contact.create(
+    first_name=first_name,
+    last_name=last_name,
+    email=email,
+    note=note
+  )
+
   @classmethod
   def modify_existing_contact(cls):
     print('Enter ID: ')
@@ -75,16 +80,19 @@ class CRM:
   
   
   def display_all_contacts(self):
-    Contact.all()
+    for contact in Contact.select():
+      print(contact.full_name())
   
   def search_by_attribute(self):
     print('Which attribute would you like to search by?: ')
     attribute = input()
     print('Which value would you like to search by?: ')
     value = input()
-    show_contact = Contact.find_by(attribute, value)
-    print(show_contact)
-    
+    #show_contact = Contact.find_by(attribute, value)
+    #print(show_contact)
+    contact = None
+
+
 
 a_crm_app = CRM()
 a_crm_app.main_menu()
