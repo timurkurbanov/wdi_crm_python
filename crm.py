@@ -61,13 +61,14 @@ class CRM:
   def modify_existing_contact(cls):
     print('Enter ID: ')
     id = input()
-    contact = Contact.find(id)
+    contact = Contact.get_by_id(id)
     print(contact)
     print('please enter an attribute to change')
     n_attribute = input()
     print('please enter a new value')
     n_value = input()
-    contact.update(n_attribute, n_value)
+    setattr(contact, n_attribute, n_value)
+    contact.save()
     return contact.update
     
     
@@ -75,8 +76,8 @@ class CRM:
   def delete_contact(self):
     print('Please enter ID of contact to delete: ')
     id = input()
-    contact = Contact.find(int(id))
-    contact.delete()
+    contact = Contact.get_by_id(id)
+    contact.delete_instance()
   
   
   def display_all_contacts(self):
@@ -91,6 +92,16 @@ class CRM:
     #show_contact = Contact.find_by(attribute, value)
     #print(show_contact)
     contact = None
+    if attribute == 'first_name':
+      contact = Contact.select().where(Contact.first_name == value)
+    for row in contact:
+      print(row.first_name)
+    if attribute == 'last_name':
+      contact = Contact.select().where(Contact.last_name == value)
+    for row in contact:
+      print(row.last_name)
+    print('-->',contact)
+
 
 
 
